@@ -1,0 +1,15 @@
+server:
+  port: 28527
+  servlet:
+    context-path: /
+
+hhm:
+  auth:
+    symmetricKey: 0T20MM2BQiUHSMpRPyTYRw== #加密长token
+
+
+
+
+
+
+

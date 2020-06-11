@@ -1,0 +1,39 @@
+server:
+  port: 29527
+  servlet:
+    context-path: /auth
+
+hhm:
+  auth:
+    server: http://127.0.0.1:29527/auth
+    enabled: true
+    clientId: hhm
+    clientSecret: hhm123
+    keyLocation: hhmkeystore.jks
+    keystorePassword: HUHUAMIN@423177
+    #可以与上面一样也能够可可以不一样
+    keypassword: HUHUAMIN@423177
+    alias: hhm
+    productTypeValiditySeconds: 86400 #产品类型存储时间   24小时
+    tokenValiditySeconds: 10800 #code存储到redis中的时间   3小时
+    jwtValiditySeconds: 86400 #token+ip存储到redis中的时间 24小时
+    cookieDomain: huhuamin.com #域名
+    cookieMaxAge: -1 #cookie的有效期
+    accessTokenUri: ${hhm.auth.server}/oauth/token
+    symmetricKey: 0T20MM2BQiUHSMpRPyTYRw== #加密长token
+    publicKey:
+      -----BEGIN PUBLIC KEY-----
+      MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAqnnGG8GyhSX1vHng4XLs
+      Z9i2pnxIXj6RUdo7Kwkfoze3pkGXMhZegk7aA1wcQwKo9SYEzlpO/xaT+xgFscn4
+      L2jMJmYU8qCBAzz3m5V/pKWyXVhkErQVtO688RS4ky8aiStrCDbJhHoj65WAkF36
+      MfVJRwttmIOpUkvP4MnJ0MLqbDd8A/WmY3Gbo5bBWcFfN67CfwsOeEfSRh28fPTW
+      8z6+ROBki4hW3166n5QXggaSIJA6SQzDKqErB4L/YeFtPlKqJmN/9Jx5uqyRQzWU
+      OARH2RK70aynSdCQhbwE7J2nmvigjSW6aqb9+nwB2Lkvc3f6pBlLxa986QLXcS7i
+      jQIDAQAB
+      -----END PUBLIC KEY-----
+
+
+
+
+
+

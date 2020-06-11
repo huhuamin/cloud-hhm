@@ -1,0 +1,16 @@
+spring:
+  application:
+    name: oauth2
+  profiles:
+#    active: "@profile.active@"
+    active: dev
+
+
+
+
+
+
+
+
+
+
