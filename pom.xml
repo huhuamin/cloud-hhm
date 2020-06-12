@@ -37,7 +37,6 @@
     <modules>
         <module>oauth2-hhm</module>
         <module>common-hhm</module>
-        <module>common-hhm/common-oauth2-resource-server</module>
     </modules>
 
 
