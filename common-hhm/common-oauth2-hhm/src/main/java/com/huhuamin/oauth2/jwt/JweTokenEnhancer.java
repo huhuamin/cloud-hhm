@@ -1,6 +1,7 @@
 package com.huhuamin.oauth2.jwt;
 
 
+import com.huhuamin.core.constants.SecurityContants;
 import com.huhuamin.oauth2.model.UserJwt;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -34,7 +35,8 @@ public class JweTokenEnhancer implements TokenEnhancer {
         DefaultOAuth2AccessToken result = new DefaultOAuth2AccessToken(accessToken);
         UserJwt user = (UserJwt) authentication.getUserAuthentication().getPrincipal();
         Map<String, Object> info = new LinkedHashMap<>(accessToken.getAdditionalInformation());
-        info.put("USER_ID",user.getUserId());
+        info.put(SecurityContants.DETAILS_USER_ID, user.getUserId());
+        info.put(SecurityContants.DETAILS_USERNAME, user.getUsername());
         String tokenId = result.getValue();
         if (!info.containsKey(TOKEN_ID)) {
             info.put(TOKEN_ID, tokenId);

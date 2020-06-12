@@ -13,8 +13,9 @@ import java.util.Collection;
  * @Author : 胡化敏（175759041@qq.com）
  * @Date: 2020-06-12 09:22  //时间
  */
-@Data
-public class UserJwt extends User implements UserDetails {
+
+public class UserJwt extends User {
+
     private Long userId;
 
     public UserJwt(String username, String password, Collection<? extends GrantedAuthority> authorities) {
@@ -32,4 +33,12 @@ public class UserJwt extends User implements UserDetails {
         this.userId = userId;
     }
 
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 }

@@ -1,19 +1,16 @@
-package com.huhuamin.oauth2.service;
+package com.huhuamin.service;
 
 
-import com.huhuamin.core.exception.HCommonException;
 import com.huhuamin.core.exception.LoginException;
 import com.huhuamin.core.model.HResult;
 import com.huhuamin.oauth2.model.DbTempUser;
 import com.huhuamin.oauth2.model.UserJwt;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -26,12 +23,17 @@ import java.util.*;
  * @Author : 胡化敏（175759041@qq.com）
  * @Date: 2020-06-12 09:26  //时间
  */
+
 @Service
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
-    @Autowired
-    private PasswordEncoder passwordEncoder;
+
+    private final PasswordEncoder passwordEncoder;
     public Map<String, DbTempUser> user = new HashMap<>();
+
+    public UserDetailsServiceImpl(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
+    }
 
     @PostConstruct
     public void init() {
@@ -83,4 +85,5 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         return new UserJwt(dbUser.getId(), dbUser.getUserName(), dbUser.getPassword(), true, true, true, true,
                 authorities);
     }
+
 }

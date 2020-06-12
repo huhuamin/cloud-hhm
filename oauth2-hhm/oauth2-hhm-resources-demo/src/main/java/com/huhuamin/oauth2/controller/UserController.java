@@ -1,5 +1,6 @@
 package com.huhuamin.oauth2.controller;
 
+import com.huhuamin.oauth2.model.UserJwt;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
@@ -10,11 +11,11 @@ public class UserController {
 
     @RequestMapping("/api/profile")
     public ResponseEntity<UserProfile> myProfile() {
-        String username = (String) SecurityContextHolder.getContext()
+        UserJwt username = (UserJwt) SecurityContextHolder.getContext()
                 .getAuthentication().getPrincipal();
-        String email = username + "@mailinator.com";
+        String email = username.getUserId() + "@mailinator.com";
 
-        UserProfile profile = new UserProfile(username, email);
+        UserProfile profile = new UserProfile(username.getUsername(), email);
 
         return ResponseEntity.ok(profile);
     }
