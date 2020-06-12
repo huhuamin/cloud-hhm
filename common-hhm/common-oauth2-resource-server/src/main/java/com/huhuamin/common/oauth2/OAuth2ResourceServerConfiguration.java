@@ -34,13 +34,12 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
     private DefaultAccessTokenConverter defaultAccessTokenConverter;
 
 
-
     @Override
     public void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
                 .anyRequest().authenticated().and()
-                .requestMatchers().antMatchers("/api/**");
+                .requestMatchers().antMatchers("/api/**").antMatchers("/customer/**");
     }
 
     @Override
@@ -57,7 +56,7 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
     //autowired 数据 初始化 bean start
 
     @Bean
-    public SecurityAuthProperties securityAuthProperties(){
+    public SecurityAuthProperties securityAuthProperties() {
         return new SecurityAuthProperties();
     }
 
