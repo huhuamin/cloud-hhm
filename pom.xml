@@ -37,6 +37,7 @@
     <modules>
         <module>oauth2-hhm</module>
         <module>common-hhm</module>
+        <module>common-hhm/common-oauth2-resource-server</module>
     </modules>
 
 
@@ -167,6 +168,11 @@
             <dependency>
                 <groupId>com.clzah</groupId>
                 <artifactId>common-core-hhm</artifactId>
+                <version>${project.hhm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.clzah</groupId>
+                <artifactId>common-oauth2-resource-server</artifactId>
                 <version>${project.hhm.version}</version>
             </dependency>
             <!--        内部 end-->
