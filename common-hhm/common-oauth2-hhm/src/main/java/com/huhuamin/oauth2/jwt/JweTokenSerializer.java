@@ -20,6 +20,12 @@ public class JweTokenSerializer {
         this.encodedKeyPair = encodedKeyPair;
     }
 
+    /**
+     * json 加密
+     *
+     * @param payload
+     * @return
+     */
     public String encode(String payload) {
         JWEAlgorithm alg = JWEAlgorithm.A128KW;
         EncryptionMethod encryptionMethod = EncryptionMethod.A128GCM;
@@ -38,6 +44,13 @@ public class JweTokenSerializer {
         }
     }
 
+    /**
+     * json 解密
+     *
+     * @param base64EncodedKey
+     * @param content
+     * @return
+     */
     public Map<String, Object> decode(String base64EncodedKey, String content) {
         try {
             byte[] decodedKey = Base64.getDecoder().decode(base64EncodedKey);

@@ -6,14 +6,14 @@ package com.huhuamin.core.constants;
  * @Author : 胡化敏（175759041@qq.com）
  * @Date: 2020-06-12 15:18  //时间
  */
-public class SecurityContants {
+public class HSecurityConstants {
     /**
      * 用户ID字段
      */
-    public static final String DETAILS_USER_ID = "user_id";
+    public static final String DETAILS_USER_ID = "USER_ID";
 
     /**
      * 用户名字段
      */
-    public static final String DETAILS_USERNAME = "username";
+    public static final String DETAILS_USERNAME = "user_name";
 }

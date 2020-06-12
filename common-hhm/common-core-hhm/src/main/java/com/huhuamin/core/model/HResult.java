@@ -2,7 +2,6 @@ package com.huhuamin.core.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
-import java.beans.Transient;
 import java.io.Serializable;
 
 /**

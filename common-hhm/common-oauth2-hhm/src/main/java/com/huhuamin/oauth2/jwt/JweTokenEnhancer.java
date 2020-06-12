@@ -1,7 +1,7 @@
 package com.huhuamin.oauth2.jwt;
 
 
-import com.huhuamin.core.constants.SecurityContants;
+import com.huhuamin.core.constants.HSecurityConstants;
 import com.huhuamin.oauth2.model.UserJwt;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
@@ -30,13 +30,20 @@ public class JweTokenEnhancer implements TokenEnhancer {
         this.tokenSerializer = tokenSerializer;
     }
 
+    /**
+     * jwt json 加密配置，额外的用户信息加入
+     *
+     * @param accessToken
+     * @param authentication
+     * @return
+     */
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         DefaultOAuth2AccessToken result = new DefaultOAuth2AccessToken(accessToken);
         UserJwt user = (UserJwt) authentication.getUserAuthentication().getPrincipal();
         Map<String, Object> info = new LinkedHashMap<>(accessToken.getAdditionalInformation());
-        info.put(SecurityContants.DETAILS_USER_ID, user.getUserId());
-        info.put(SecurityContants.DETAILS_USERNAME, user.getUsername());
+        info.put(HSecurityConstants.DETAILS_USER_ID, user.getUserId());
+        info.put(HSecurityConstants.DETAILS_USERNAME, user.getUsername());
         String tokenId = result.getValue();
         if (!info.containsKey(TOKEN_ID)) {
             info.put(TOKEN_ID, tokenId);
@@ -47,6 +54,13 @@ public class JweTokenEnhancer implements TokenEnhancer {
         return result;
     }
 
+    /**
+     * 加密
+     *
+     * @param accessToken
+     * @param authentication
+     * @return
+     */
     private String encode(DefaultOAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         String content;
         try {
@@ -56,7 +70,6 @@ public class JweTokenEnhancer implements TokenEnhancer {
         } catch (Exception e) {
             throw new IllegalStateException("Cannot convert access token to JSON", e);
         }
-
     }
 
 }

@@ -1,6 +1,7 @@
 package com.huhuamin;
 
 import com.huhuamin.oauth2.properties.SecurityAuthProperties;
+import com.huhuamin.oauth2.resource.config.OAuth2ResourceServerConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -13,13 +14,13 @@ import org.springframework.context.annotation.Bean;
  * @Date: 2020-06-10 14:32  //时间
  */
 //@EnableDiscoveryClient
-@SpringBootApplication
+@SpringBootApplication(exclude = OAuth2ResourceServerConfiguration.class)
 public class OAuth2Main {
     public static void main(String[] args) {
         SpringApplication.run(OAuth2Main.class, args);
     }
     @Bean
-    public SecurityAuthProperties securityAuthProperties(){
+    public SecurityAuthProperties securityAuthProperties() {
         return new SecurityAuthProperties();
     }
 

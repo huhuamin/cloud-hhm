@@ -1,9 +1,7 @@
 package com.huhuamin.oauth2.model;
 
-import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
 
@@ -15,7 +13,6 @@ import java.util.Collection;
  */
 
 public class UserJwt extends User {
-
     private Long userId;
 
     public UserJwt(String username, String password, Collection<? extends GrantedAuthority> authorities) {

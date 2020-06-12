@@ -9,6 +9,9 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 
 import java.util.Collection;
 
+/**
+ * jwt的加密配置 TokenStore
+ */
 public class JweTokenStore implements TokenStore {
     private String encodedSigningKey;
     private final TokenStore delegate;
@@ -26,7 +29,7 @@ public class JweTokenStore implements TokenStore {
     @Override
     public OAuth2AccessToken readAccessToken(String tokenValue) {
         return converter.extractAccessToken(
-            tokenValue, crypto.decode(encodedSigningKey, tokenValue));
+                tokenValue, crypto.decode(encodedSigningKey, tokenValue));
     }
 
     @Override
