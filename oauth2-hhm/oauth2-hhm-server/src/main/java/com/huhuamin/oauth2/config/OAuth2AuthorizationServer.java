@@ -1,5 +1,6 @@
 package com.huhuamin.oauth2.config;
 
+import com.huhuamin.handler.BootOAuth2WebResponseExceptionTranslator;
 import com.huhuamin.oauth2.jwt.JweTokenEnhancer;
 import com.huhuamin.oauth2.jwt.JweTokenSerializer;
 import com.huhuamin.oauth2.jwt.JweTokenStore;
@@ -10,7 +11,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
-import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
@@ -40,16 +41,20 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
     @Autowired
     private PasswordEncoder passwordEncoder;
 
-
-
-
     @Autowired
-    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
-        auth.inMemoryAuthentication()
-                .withUser("jk").password(passwordEncoder.encode("jkjk")).roles("USER")
-                .and()
-                .withUser("admin").password(passwordEncoder.encode("admin123")).roles("ADMIN");
-    }
+    private UserDetailsService userDetailsService;
+    @Autowired
+    private BootOAuth2WebResponseExceptionTranslator bootOAuth2WebResponseExceptionTranslator;
+
+
+
+//    @Autowired
+//    public void globalUserDetails(AuthenticationManagerBuilder auth) throws Exception {
+//        auth.inMemoryAuthentication()
+//                .withUser("jk").password(passwordEncoder.encode("jkjk")).roles("USER")
+//                .and()
+//                .withUser("admin").password(passwordEncoder.encode("admin123")).roles("ADMIN");
+//    }
 
     /* 授权服务器的安全配置*/
     @Override
@@ -59,6 +64,7 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
                 .checkTokenAccess("permitAll()")
                 .allowFormAuthenticationForClients();
     }
+
 
     /*设置认证请求相关参数，例如客户端账号和密码、令牌有效时间等等*/
     @Override
@@ -80,7 +86,10 @@ public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdap
         endpoints
                 .authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
                 .tokenStore(jweTokenStore(jwtAccessTokenConverter(securityAuthProperties)))
+                .exceptionTranslator(bootOAuth2WebResponseExceptionTranslator)
+
                 .tokenEnhancer(tokenEnhancer(securityAuthProperties));
+
 //                .accessTokenConverter(jwtAccessTokenConverter());//交给jwe处理
     }
 

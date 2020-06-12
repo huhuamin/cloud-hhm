@@ -47,6 +47,17 @@
             <artifactId>spring-boot-configuration-processor</artifactId>
             <optional>true</optional>
         </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
+        </dependency>
+        <!--        内部 start -->
+        <dependency>
+            <groupId>com.clzah</groupId>
+            <artifactId>common-core-hhm</artifactId>
+        </dependency>
+
+        <!--        内部 end -->
     </dependencies>
 
 

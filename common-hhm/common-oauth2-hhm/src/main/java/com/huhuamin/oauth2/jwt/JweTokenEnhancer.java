@@ -1,5 +1,6 @@
 package com.huhuamin.oauth2.jwt;
 
+import com.huhuamin.oauth2.model.DbTempUser;
 import org.springframework.security.oauth2.common.DefaultOAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.util.JsonParser;
@@ -30,7 +31,9 @@ public class JweTokenEnhancer implements TokenEnhancer {
     @Override
     public OAuth2AccessToken enhance(OAuth2AccessToken accessToken, OAuth2Authentication authentication) {
         DefaultOAuth2AccessToken result = new DefaultOAuth2AccessToken(accessToken);
+        DbTempUser user = (DbTempUser) authentication.getUserAuthentication().getPrincipal();
         Map<String, Object> info = new LinkedHashMap<>(accessToken.getAdditionalInformation());
+        info.put("USER_ID",user.getId());
         String tokenId = result.getValue();
         if (!info.containsKey(TOKEN_ID)) {
             info.put(TOKEN_ID, tokenId);
