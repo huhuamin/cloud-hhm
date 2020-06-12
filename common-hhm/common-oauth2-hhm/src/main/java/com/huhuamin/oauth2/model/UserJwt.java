@@ -1,5 +1,6 @@
 package com.huhuamin.oauth2.model;
 
+import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -12,6 +13,7 @@ import java.util.Collection;
  * @Author : 胡化敏（175759041@qq.com）
  * @Date: 2020-06-12 09:22  //时间
  */
+@Data
 public class UserJwt extends User implements UserDetails {
     private Long userId;
 
@@ -29,4 +31,5 @@ public class UserJwt extends User implements UserDetails {
         this(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
         this.userId = userId;
     }
+
 }

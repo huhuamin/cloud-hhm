@@ -14,10 +14,10 @@ import java.util.Map;
 
 public class JweTokenSerializer {
 
-    private String encodedKeypair;
+    private String encodedKeyPair;
 
-    public JweTokenSerializer(String encodedKeypair) {
-        this.encodedKeypair = encodedKeypair;
+    public JweTokenSerializer(String encodedKeyPair) {
+        this.encodedKeyPair = encodedKeyPair;
     }
 
     public String encode(String payload) {
@@ -25,7 +25,7 @@ public class JweTokenSerializer {
         EncryptionMethod encryptionMethod = EncryptionMethod.A128GCM;
 
         try {
-            byte[] decodedKey = Base64.getDecoder().decode(encodedKeypair);
+            byte[] decodedKey = Base64.getDecoder().decode(encodedKeyPair);
             SecretKey key = new SecretKeySpec(decodedKey, 0, decodedKey.length, "AES");
             JWEObject jwe = new JWEObject(
                     new JWEHeader(alg, encryptionMethod),

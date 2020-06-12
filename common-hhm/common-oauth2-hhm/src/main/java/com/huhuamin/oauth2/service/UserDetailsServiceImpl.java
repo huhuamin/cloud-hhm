@@ -7,13 +7,16 @@ import com.huhuamin.core.model.HResult;
 import com.huhuamin.oauth2.model.DbTempUser;
 import com.huhuamin.oauth2.model.UserJwt;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 
 /**
@@ -25,12 +28,16 @@ import java.util.*;
 @Service
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
-    public static Map<String, DbTempUser> user = new HashMap<>();
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    public Map<String, DbTempUser> user = new HashMap<>();
 
-    static {
-        user.put("huhuamin", new DbTempUser(1L, "huhuamin", "123456"));
-        user.put("chenyong", new DbTempUser(2L, "chenyong", "654321"));
+    @PostConstruct
+    public void init() {
+        user.put("huhuamin", new DbTempUser(1L, "huhuamin", passwordEncoder.encode("123456")));
+        user.put("chenyong", new DbTempUser(2L, "chenyong", passwordEncoder.encode("654321")));
     }
+
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
