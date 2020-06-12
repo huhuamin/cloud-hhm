@@ -43,6 +43,11 @@ public class HResult<T> implements Serializable {
     private String msg;
 
     private T data;
+    /**
+     * 模块名称
+     */
+    private String module;
+
 
     public static <T> HResult<T> ok() {
         return restResult(null, SUCCESS_CODE, TRUE, null);
@@ -58,6 +63,10 @@ public class HResult<T> implements Serializable {
 
     public static <T> HResult<T> failed() {
         return restResult(null, FAIL_CODE, FALSE, null);
+    }
+
+    public static <T> HResult<T> failed(String msg, String module) {
+        return restResult(null, FAIL_CODE, FALSE, msg, null);
     }
 
     public static <T> HResult<T> failed(String msg) {
@@ -76,13 +85,21 @@ public class HResult<T> implements Serializable {
         return restResult(null, code, FALSE, msg);
     }
 
+    public static <T> HResult<T> failed(int code, String msg, String module) {
+        return restResult(null, code, FALSE, msg, module);
+    }
+
     private static <T> HResult<T> restResult(T data, int code, boolean success, String msg) {
+        return restResult(data, code, success, msg, null);
+    }
+
+    private static <T> HResult<T> restResult(T data, int code, boolean success, String msg, String module) {
         HResult<T> apiResult = new HResult<>();
         apiResult.setCode(code);
         apiResult.setSuccess(success);
         apiResult.setData(data);
         apiResult.setMsg(msg);
-
+        apiResult.setModule(module);
         return apiResult;
     }
 
@@ -113,6 +130,7 @@ public class HResult<T> implements Serializable {
     public boolean isSuccess() {
         return success;
     }
+
     @JsonIgnore
     public boolean isFail() {
         return !success;
@@ -120,5 +138,13 @@ public class HResult<T> implements Serializable {
 
     public void setSuccess(boolean success) {
         this.success = success;
+    }
+
+    public String getModule() {
+        return module;
+    }
+
+    public void setModule(String module) {
+        this.module = module;
     }
 }

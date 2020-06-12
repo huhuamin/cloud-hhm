@@ -1,6 +1,7 @@
 package com.huhuamin.oauth2.service;
 
 
+import com.huhuamin.core.exception.HCommonException;
 import com.huhuamin.core.exception.LoginException;
 import com.huhuamin.core.model.HResult;
 import com.huhuamin.oauth2.model.DbTempUser;
@@ -51,7 +52,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
             log.info(userResult.getMsg());
             throw new LoginException(userResult.getMsg());
         } else if (null == userResult.getData()) {
-            throw new UsernameNotFoundException("登录用户：" + username + " 不存在");
+            throw new LoginException("登录用户：" + username + " 不存在");
         }
 //        else if (UserStatus.DELETED.getCode().equals(userResult.getData().getSysUser().getDelFlag())) {
 //            log.info("登录用户：{} 已被删除.", username);

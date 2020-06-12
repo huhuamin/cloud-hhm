@@ -1,6 +1,7 @@
 package com.huhuamin.handler;
 
-import com.huhuamin.core.exception.LoginException;
+import com.huhuamin.core.constants.HConstants;
+import com.huhuamin.core.exception.HCommonException;
 import com.huhuamin.core.model.HResult;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpHeaders;
@@ -22,8 +23,9 @@ import java.io.IOException;
 public class BootOAuth2WebResponseExceptionTranslator implements WebResponseExceptionTranslator {
     @Override
     public ResponseEntity translate(Exception e) throws Exception {
-        if (null != e.getCause() && e.getCause() instanceof LoginException) {
-            return handleOAuth2Exception(HResult.failed(500, ((LoginException) e.getCause()).getDefaultMessage()));
+        if (null != e.getCause() && e.getCause() instanceof HCommonException) {
+            HCommonException hCommonException = (HCommonException) e.getCause();
+            return handleOAuth2Exception(HResult.failed(hCommonException.getCode(), hCommonException.getMessage(), HConstants.MODEL_LOGIN_NAME));
         } else {
             return handleOAuth2Exception(HResult.failed(500, e.getMessage()));
         }
@@ -36,11 +38,8 @@ public class BootOAuth2WebResponseExceptionTranslator implements WebResponseExce
         HttpHeaders headers = new HttpHeaders();
         headers.set("Cache-Control", "no-store");
         headers.set("Pragma", "no-cache");
-
-
         ResponseEntity<HResult> response = new ResponseEntity<>(hResult, headers,
                 HttpStatus.valueOf(status));
-
         return response;
 
     }
