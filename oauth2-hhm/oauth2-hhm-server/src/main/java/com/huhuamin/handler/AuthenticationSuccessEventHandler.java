@@ -1,7 +1,6 @@
 package com.huhuamin.handler;
 
 
-import io.micrometer.core.instrument.util.StringUtils;
 import org.springframework.context.ApplicationListener;
 import org.springframework.security.authentication.event.AuthenticationSuccessEvent;
 import org.springframework.security.core.Authentication;

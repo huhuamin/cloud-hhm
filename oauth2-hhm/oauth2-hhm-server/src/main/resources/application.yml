@@ -19,7 +19,6 @@ hhm:
     jwtValiditySeconds: 86400 #token+ip存储到redis中的时间 24小时
     cookieDomain: huhuamin.com #域名
     cookieMaxAge: -1 #cookie的有效期
-    accessTokenUri: ${hhm.auth.server}/oauth/token
     symmetricKey: 0T20MM2BQiUHSMpRPyTYRw== #加密长token
     publicKey:
       -----BEGIN PUBLIC KEY-----
