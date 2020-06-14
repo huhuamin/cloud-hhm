@@ -37,6 +37,7 @@ class Oauth2WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     /**
      * 自定义账户系统
+     *
      * @return
      */
 //    @Override
