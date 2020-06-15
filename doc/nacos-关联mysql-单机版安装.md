@@ -1,4 +1,4 @@
-# nacos 单机版+mysql 安装	
+# nacos-关联mysql-单机版安装.md
 
 ## [1下载最新版nacos](https://github.com/alibaba/nacos/releases)
 ps:迅雷下载会很快哦

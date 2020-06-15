@@ -1,4 +1,4 @@
-# docker redis 单机版
+# redis-docker-单机版安装
 
 ## docker pull redis:5.0.9
 

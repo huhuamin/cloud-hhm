@@ -1,4 +1,4 @@
-# nacos 单机版sentinel安装	
+# sentinel-单机版安装
 
 ## [1下载最新版sentinel](https://github.com/alibaba/Sentinel/releases)
 ps:迅雷下载会很快哦
