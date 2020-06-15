@@ -10,5 +10,10 @@
     认证中心
         oauth2全局异常处理
         模拟从数据库取数据
+        抽离公共Resource Config,其他微服务获取用户信息，只需要调用
+```java
+ UserJwt username = (UserJwt) SecurityContextHolder.getContext()
+                        .getAuthentication().getPrincipal();
+```
 
         

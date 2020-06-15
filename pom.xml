@@ -169,6 +169,11 @@
                 <artifactId>common-core-hhm</artifactId>
                 <version>${project.hhm.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.clzah</groupId>
+                <artifactId>common-oauth2-resource-server</artifactId>
+                <version>${project.hhm.version}</version>
+            </dependency>
             <!--        内部 end-->
         </dependencies>
 
