@@ -17,6 +17,7 @@
         <module>common-oauth2-hhm</module>
         <module>common-core-hhm</module>
         <module>common-oauth2-resource-server</module>
+        <module>common-db-hhm</module>
     </modules>
 
 

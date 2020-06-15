@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
  */
 @Configuration
 @EnableWebSecurity
-class Oauth2WebSecurityConfig extends WebSecurityConfigurerAdapter {
+class Oauth2WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 //    @Override
 //    public void configure(WebSecurity web) throws Exception {

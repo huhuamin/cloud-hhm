@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: hhm-gateway
+  profiles:
+    #    active: "@profile.active@"
+    active: dev
+
+
+# Tomcat
+server:
+  port: 28080
+

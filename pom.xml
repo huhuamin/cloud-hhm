@@ -32,11 +32,13 @@
         <pagehelper.version>1.2.13</pagehelper.version>
         <spring.security.version>2.3.8.RELEASE</spring.security.version>
         <spring.security.jwt>1.1.1.RELEASE</spring.security.jwt>
+        <kaptcha.version>2.3.2</kaptcha.version>
     </properties>
     <!--    自己的项目-->
     <modules>
         <module>oauth2-hhm</module>
         <module>common-hhm</module>
+        <module>gateway-hhm</module>
     </modules>
 
 
@@ -157,6 +159,12 @@
                 <artifactId>spring-security-jwt</artifactId>
                 <version>${spring.security.jwt}</version>
             </dependency>
+            <!-- 验证码 -->
+            <dependency>
+                <groupId>com.github.penggle</groupId>
+                <artifactId>kaptcha</artifactId>
+                <version>${kaptcha.version}</version>
+            </dependency>
 
             <!--        内部 start -->
             <dependency>
@@ -171,12 +179,16 @@
             </dependency>
             <dependency>
                 <groupId>com.clzah</groupId>
+                <artifactId>common-db-hhm</artifactId>
+                <version>${project.hhm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.clzah</groupId>
                 <artifactId>common-oauth2-resource-server</artifactId>
                 <version>${project.hhm.version}</version>
             </dependency>
             <!--        内部 end-->
         </dependencies>
-
 
 
     </dependencyManagement>

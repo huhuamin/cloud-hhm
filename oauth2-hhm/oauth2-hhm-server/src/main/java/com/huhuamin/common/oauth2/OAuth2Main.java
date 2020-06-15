@@ -3,6 +3,7 @@ package com.huhuamin.common.oauth2;
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
 
@@ -12,7 +13,7 @@ import org.springframework.context.annotation.Bean;
  * @Author : 胡化敏（175759041@qq.com）
  * @Date: 2020-06-10 14:32  //时间
  */
-//@EnableDiscoveryClient
+@EnableDiscoveryClient
 @SpringBootApplication
 public class OAuth2Main {
     public static void main(String[] args) {
@@ -22,5 +23,6 @@ public class OAuth2Main {
     public SecurityAuthProperties securityAuthProperties() {
         return new SecurityAuthProperties();
     }
+
 
 }

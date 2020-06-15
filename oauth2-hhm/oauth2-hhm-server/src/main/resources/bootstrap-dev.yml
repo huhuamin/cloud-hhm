@@ -1,0 +1,26 @@
+spring:
+  cloud:
+    nacos:
+      discovery:
+        server-addr: http://127.0.0.1:8848
+        namespace: 0a7b77cf-5b62-48fd-a1c6-5ba3723c0448
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        # 配置文件格式
+        file-extension: yml
+        namespace: 0a7b77cf-5b62-48fd-a1c6-5ba3723c0448
+        # 共享配置
+        shared-configs[0]: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+
+
+
+
+#    sentinel:
+#      transport:
+#        port: 8719
+#        dashboard: http://192.168.11.66:8858
+
+  #其他配置在nacos中，这里只配置数据源
+#  datasource:
+#    url: jdbc:mysql://hhm.clzah.com:3307/cloud_hhm?useUnicode=true&characterEncoding=utf8&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=GMT%2B8

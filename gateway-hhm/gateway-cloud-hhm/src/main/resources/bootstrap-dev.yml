@@ -1,0 +1,34 @@
+# Spring
+spring:
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    nacos:
+      discovery:
+        # 服务注册地址
+        server-addr: 127.0.0.1:8848
+        namespace: 0a7b77cf-5b62-48fd-a1c6-5ba3723c0448
+      config:
+        # 配置中心地址
+        server-addr: 127.0.0.1:8848
+        namespace: 0a7b77cf-5b62-48fd-a1c6-5ba3723c0448
+        # 配置文件格式
+        file-extension: yml
+        # 共享配置
+        shared-configs[0]: application-${spring.profiles.active}.${spring.cloud.nacos.config.file-extension}
+    sentinel:
+      # 取消控制台懒加载
+      eager: true
+      transport:
+        # 控制台地址
+        dashboard: 127.0.0.1:8858
+      # nacos配置持久化
+      datasource:
+        ds1:
+          nacos:
+            server-addr: 127.0.0.1:8848
+            dataId: sentinel-hhm-gateway
+            namespace: 0a7b77cf-5b62-48fd-a1c6-5ba3723c0448
+            groupId: DEFAULT_GROUP
+            data-type: json
+            rule-type: flow

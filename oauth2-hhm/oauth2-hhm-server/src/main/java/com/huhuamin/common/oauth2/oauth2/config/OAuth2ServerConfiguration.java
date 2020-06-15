@@ -32,9 +32,15 @@ import java.security.KeyPair;
  */
 @Configuration
 @EnableAuthorizationServer
-public class OAuth2AuthorizationServer extends AuthorizationServerConfigurerAdapter {
+public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdapter {
+    /**
+     * 认证管理器
+     */
     @Autowired
     private AuthenticationManager authenticationManager;
+    /**
+     *
+     */
     @Autowired
     private SecurityAuthProperties securityAuthProperties;
     @Autowired

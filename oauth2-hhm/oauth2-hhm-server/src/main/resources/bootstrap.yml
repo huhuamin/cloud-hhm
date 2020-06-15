@@ -1,10 +1,12 @@
 spring:
   application:
-    name: oauth2
+    name: hhm-oauth2
   profiles:
 #    active: "@profile.active@"
     active: dev
 
+server:
+  port: 29527
 
 
 
