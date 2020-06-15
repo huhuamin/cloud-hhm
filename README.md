@@ -15,5 +15,10 @@
  UserJwt username = (UserJwt) SecurityContextHolder.getContext()
                         .getAuthentication().getPrincipal();
 ```
+## tag0.0.4
+网关第一版，oauth/token,登陆 basic auth 信息服务端生成，不是网页端生成，提高安全性
+自动更新配置信息
+@RefreshScore GatewayProperties
+gateway sentinel 监控
 
         

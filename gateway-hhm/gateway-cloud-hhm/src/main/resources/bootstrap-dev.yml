@@ -20,6 +20,7 @@ spring:
       # 取消控制台懒加载
       eager: true
       transport:
+        port: 8719
         # 控制台地址
         dashboard: 127.0.0.1:8858
       # nacos配置持久化
