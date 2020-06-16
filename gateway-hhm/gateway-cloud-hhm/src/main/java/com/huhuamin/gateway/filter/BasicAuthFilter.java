@@ -4,7 +4,6 @@ package com.huhuamin.gateway.filter;
 import com.alibaba.nacos.client.identify.Base64;
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cloud.context.config.annotation.RefreshScope;
 import org.springframework.cloud.gateway.filter.GatewayFilter;
 import org.springframework.cloud.gateway.filter.factory.AbstractGatewayFilterFactory;
 import org.springframework.http.server.reactive.ServerHttpRequest;
