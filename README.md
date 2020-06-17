@@ -21,4 +21,10 @@
 @RefreshScore GatewayProperties
 gateway sentinel 监控
 
+## tag0.0.5
+代码优化
+模仿 JwtAccessTokenConverter 编写 JweAccessTokenConverter
+模仿 JwtTokenStore 编写 JweTokenStore
+
+
         
