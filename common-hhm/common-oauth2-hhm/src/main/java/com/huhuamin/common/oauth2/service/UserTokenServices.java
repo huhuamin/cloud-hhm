@@ -1,6 +1,7 @@
 package com.huhuamin.common.oauth2.service;
 
 import com.huhuamin.common.oauth2.convert.ResourceConvertUser;
+import com.huhuamin.common.oauth2.jwt.JweAccessTokenConverter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
@@ -25,20 +26,27 @@ public class UserTokenServices implements ResourceServerTokenServices {
 
     private final DefaultAccessTokenConverter defaultAccessTokenConverter;
 
-    private final JwtAccessTokenConverter jwtAccessTokenConverter;
+    private final JweAccessTokenConverter jweAccessTokenConverter;
 
-    public UserTokenServices(TokenStore tokenStore, DefaultAccessTokenConverter defaultAccessTokenConverter, JwtAccessTokenConverter jwtAccessTokenConverter) {
+    public UserTokenServices(TokenStore tokenStore, DefaultAccessTokenConverter defaultAccessTokenConverter, JweAccessTokenConverter jweAccessTokenConverter) {
         this.tokenStore = tokenStore;
         this.defaultAccessTokenConverter = defaultAccessTokenConverter;
-        this.jwtAccessTokenConverter = jwtAccessTokenConverter;
+        this.jweAccessTokenConverter = jweAccessTokenConverter;
     }
 
     @Override
     public OAuth2Authentication loadAuthentication(String accessToken) throws AuthenticationException, InvalidTokenException {
+//        UserAuthenticationConverter userTokenConverter = new ResourceConvertUser();
+//        defaultAccessTokenConverter.setUserTokenConverter(userTokenConverter);
+//        OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(accessToken);
+//        Map<String, ?> map = jweAccessTokenConverter.convertAccessToken(readAccessToken(accessToken), oAuth2Authentication);
+//        return jweAccessTokenConverter.extractAuthentication(map);
+
+
         OAuth2Authentication oAuth2Authentication = tokenStore.readAuthentication(accessToken);
         UserAuthenticationConverter userTokenConverter = new ResourceConvertUser();
         defaultAccessTokenConverter.setUserTokenConverter(userTokenConverter);
-        Map<String, ?> map = jwtAccessTokenConverter.convertAccessToken(readAccessToken(accessToken), oAuth2Authentication);
+        Map<String, ?> map = jweAccessTokenConverter.convertAccessToken(readAccessToken(accessToken), oAuth2Authentication);
         return defaultAccessTokenConverter.extractAuthentication(map);
     }
 

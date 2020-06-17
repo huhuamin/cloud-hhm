@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 import org.springframework.context.annotation.Bean;
 
-
 /**
  * @ClassName : AuthMain  //类名
  * @Description : 认证中心启动类  //描述

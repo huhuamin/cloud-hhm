@@ -2,8 +2,8 @@ package com.huhuamin.common.oauth2;
 
 
 import com.huhuamin.common.oauth2.convert.ResourceConvertUser;
+import com.huhuamin.common.oauth2.jwt.JweAccessTokenConverter;
 import com.huhuamin.common.oauth2.jwt.JweTokenStore;
-import com.huhuamin.common.oauth2.jwt.JweTokenSerializer;
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
 import com.huhuamin.common.oauth2.service.UserTokenServices;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,23 +15,11 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 import org.springframework.security.oauth2.provider.token.DefaultAccessTokenConverter;
 import org.springframework.security.oauth2.provider.token.UserAuthenticationConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
+
 
 @Configuration
 @EnableResourceServer
 public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerAdapter {
-
-
-    /**
-     * UserTokenServices 使用
-     * <p>
-     * 服务器自己解析accessToken
-     *
-     * @return
-     */
-    @Autowired
-    private DefaultAccessTokenConverter defaultAccessTokenConverter;
 
 
     @Override
@@ -42,14 +30,20 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
                 .requestMatchers().antMatchers("/api/**").antMatchers("/customer/**");
     }
 
+    @Bean
+    DefaultAccessTokenConverter defaultAccessTokenConverter() {
+        return new DefaultAccessTokenConverter();
+    }
+
     @Override
     public void configure(ResourceServerSecurityConfigurer resources) throws Exception {
         /**
          * 每个用户都有一个自己的ResourceServerCommonConvertUser 转换器
          */
+        DefaultAccessTokenConverter accessTokenConverter = defaultAccessTokenConverter();
         UserAuthenticationConverter userTokenConverter = new ResourceConvertUser();
-        defaultAccessTokenConverter.setUserTokenConverter(userTokenConverter);
-        UserTokenServices userTokenServices = new UserTokenServices(tokenStore(), defaultAccessTokenConverter, jwtAccessTokenConverter());
+        accessTokenConverter.setUserTokenConverter(userTokenConverter);
+        UserTokenServices userTokenServices = new UserTokenServices(tokenStore(), accessTokenConverter,accessTokenConverter(securityAuthProperties()));
         resources.tokenStore(tokenStore()).tokenServices(userTokenServices);
     }
 
@@ -67,36 +61,21 @@ public class OAuth2ResourceServerConfiguration extends ResourceServerConfigurerA
      */
     @Bean
     public JweTokenStore tokenStore() {
-        return new JweTokenStore(securityAuthProperties().getSymmetricKey(),
-                new JwtTokenStore(jwtAccessTokenConverter()), jwtAccessTokenConverter(), tokenSerializer());
+        return new JweTokenStore(accessTokenConverter(securityAuthProperties()));
     }
 
-    /**
-     * jwt json 加密 解密
-     *
-     * @return
-     */
-    @Bean
-    public JweTokenSerializer tokenSerializer() {
-        return new JweTokenSerializer(securityAuthProperties().getSymmetricKey());
-    }
 
-    /**
-     * jwe +jwt +秘钥 存储
-     *
-     * @param jwtAccessTokenConverter
-     * @return
-     */
     @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter() {
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
+    public JweAccessTokenConverter accessTokenConverter(SecurityAuthProperties securityAuthProperties) {
+        JweAccessTokenConverter converter = new JweAccessTokenConverter();
         converter.setSigningKey(securityAuthProperties().getSymmetricKey());
+        converter.setBase64EncodedKey(securityAuthProperties.getSymmetricKey());
         return converter;
     }
 
-    @Bean
-    DefaultAccessTokenConverter accessTokenConverter() {
-        return new DefaultAccessTokenConverter();
-    }
-    //autowired 数据 初始化 bean end
+//    @Bean
+//    DefaultAccessTokenConverter accessTokenConverter() {
+//        return new DefaultAccessTokenConverter();
+//    }
+
 }

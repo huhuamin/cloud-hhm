@@ -1,8 +1,7 @@
 package com.huhuamin.common.oauth2.oauth2.config;
 
 import com.huhuamin.common.oauth2.handler.BootOAuth2WebResponseExceptionTranslator;
-import com.huhuamin.common.oauth2.jwt.JweTokenEnhancer;
-import com.huhuamin.common.oauth2.jwt.JweTokenSerializer;
+import com.huhuamin.common.oauth2.jwt.JweAccessTokenConverter;
 import com.huhuamin.common.oauth2.jwt.JweTokenStore;
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,9 +16,6 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.A
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerEndpointsConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configurers.AuthorizationServerSecurityConfigurer;
-import org.springframework.security.oauth2.provider.token.TokenEnhancer;
-import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
-import org.springframework.security.oauth2.provider.token.store.JwtTokenStore;
 import org.springframework.security.oauth2.provider.token.store.KeyStoreKeyFactory;
 
 import java.security.KeyPair;
@@ -43,8 +39,42 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
      */
     @Autowired
     private SecurityAuthProperties securityAuthProperties;
+
+    /**
+     * 非对称密钥
+     *
+     * @return
+     */
+    @Bean
+    public JweAccessTokenConverter accessTokenConverter(SecurityAuthProperties securityAuthProperties) {
+        /*访问证书路径*/
+        ClassPathResource resource = new ClassPathResource(securityAuthProperties.getKeyLocation());
+        /*密钥工厂*/
+        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(resource,
+                //*密钥库密码*/
+                securityAuthProperties.getKeystorePassword().toCharArray());
+        /*密钥别名*/
+        String alias = securityAuthProperties.getAlias();
+        /*密钥库密码*/
+        String keypassword = securityAuthProperties.getKeyPassword();
+
+        KeyPair keyPair = keyStoreKeyFactory.getKeyPair(alias, keypassword.toCharArray());
+        JweAccessTokenConverter converter = new JweAccessTokenConverter();
+        converter.setKeyPair(keyPair);
+        converter.setBase64EncodedKey(securityAuthProperties.getSymmetricKey());
+        return converter;
+    }
+
+    @Bean
+    public JweTokenStore jweTokenStore() {
+        return new JweTokenStore(accessTokenConverter(securityAuthProperties));
+    }
+
+
     @Autowired
     private PasswordEncoder passwordEncoder;
+
+
     @Autowired
     private BootOAuth2WebResponseExceptionTranslator bootOAuth2WebResponseExceptionTranslator;
 
@@ -66,7 +96,6 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
                 .allowFormAuthenticationForClients();
     }
 
-
     /*设置认证请求相关参数，例如客户端账号和密码、令牌有效时间等等*/
     @Override
     public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
@@ -86,71 +115,9 @@ public class OAuth2ServerConfiguration extends AuthorizationServerConfigurerAdap
     public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
         endpoints
                 .authenticationManager(authenticationManager).allowedTokenEndpointRequestMethods(HttpMethod.GET, HttpMethod.POST)
-                .tokenStore(jweTokenStore(jwtAccessTokenConverter(securityAuthProperties)))
+                .tokenStore(jweTokenStore())
+                .tokenEnhancer(accessTokenConverter(securityAuthProperties))
                 .exceptionTranslator(bootOAuth2WebResponseExceptionTranslator)
-
-                .tokenEnhancer(tokenEnhancer(securityAuthProperties));
-
-//                .accessTokenConverter(jwtAccessTokenConverter());//交给jwe处理
-    }
-
-    /**
-     * jwt+加强=jwe
-     *
-     * @return
-     */
-    @Bean
-    public TokenEnhancer tokenEnhancer(SecurityAuthProperties securityAuthProperties) {
-        return new JweTokenEnhancer(jwtAccessTokenConverter(securityAuthProperties),
-                new JweTokenSerializer(securityAuthProperties.getSymmetricKey()));
-    }
-
-
-    /**
-     * jwt json 加密 解密
-     *
-     * @return
-     */
-    @Bean
-    public JweTokenSerializer tokenSerializer() {
-        return new JweTokenSerializer(securityAuthProperties.getSymmetricKey());
-    }
-
-
-    /**
-     * jwe +jwt +秘钥 存储
-     *
-     * @param jwtAccessTokenConverter
-     * @return
-     */
-    @Bean
-    JweTokenStore jweTokenStore(JwtAccessTokenConverter jwtAccessTokenConverter) {
-        return new JweTokenStore(securityAuthProperties.getSymmetricKey(),
-                new JwtTokenStore(jwtAccessTokenConverter), jwtAccessTokenConverter, tokenSerializer());
-    }
-
-
-    /**
-     * 非对称密钥
-     *
-     * @return
-     */
-    @Bean
-    public JwtAccessTokenConverter jwtAccessTokenConverter(SecurityAuthProperties securityAuthProperties) {
-        /*访问证书路径*/
-        ClassPathResource resource = new ClassPathResource(securityAuthProperties.getKeyLocation());
-        /*密钥工厂*/
-        KeyStoreKeyFactory keyStoreKeyFactory = new KeyStoreKeyFactory(resource,
-                //*密钥库密码*/
-                securityAuthProperties.getKeystorePassword().toCharArray());
-        /*密钥别名*/
-        String alias = securityAuthProperties.getAlias();
-        /*密钥库密码*/
-        String keypassword = securityAuthProperties.getKeyPassword();
-
-        KeyPair keyPair = keyStoreKeyFactory.getKeyPair(alias, keypassword.toCharArray());
-        JwtAccessTokenConverter converter = new JwtAccessTokenConverter();
-        converter.setKeyPair(keyPair);
-        return converter;
+                .accessTokenConverter(accessTokenConverter(securityAuthProperties));
     }
 }
