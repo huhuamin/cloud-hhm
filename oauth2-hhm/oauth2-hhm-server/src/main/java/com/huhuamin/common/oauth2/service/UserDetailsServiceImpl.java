@@ -1,11 +1,14 @@
 package com.huhuamin.common.oauth2.service;
 
 
+import cn.hutool.json.JSONObject;
+import cn.hutool.json.JSONUtil;
 import com.huhuamin.common.oauth2.common.core.exception.LoginException;
 import com.huhuamin.common.oauth2.common.core.model.HResult;
 import com.huhuamin.common.oauth2.model.DbTempUser;
 import com.huhuamin.common.oauth2.model.UserJwt;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.io.IOUtils;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,8 +16,16 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.context.request.RequestAttributes;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.*;
 
 /**
@@ -44,6 +55,26 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
+        String loginType = request.getParameter("loginType");
+        if (StringUtils.isEmpty(loginType)) {
+            String str = "";
+            String listString = "";
+            BufferedReader br = null;
+            while (true) {
+                try {
+                    br = new BufferedReader(new InputStreamReader(request.getInputStream()));
+                    if (!((str = br.readLine()) != null)) break;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                listString += str;
+            }
+            JSONObject jsonObject = JSONUtil.parseObj(listString);
+            loginType = jsonObject.getStr("loginType");
+        }
+
+        System.out.println(loginType);
         HResult<DbTempUser> dbTempUserHResult = null;
         if (user.containsKey(username)) {
             dbTempUserHResult = HResult.ok(user.get(username));
