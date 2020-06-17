@@ -9,6 +9,8 @@ import com.huhuamin.common.oauth2.model.DbTempUser;
 import com.huhuamin.common.oauth2.model.UserJwt;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.io.IOUtils;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -35,16 +37,13 @@ import java.util.*;
  * @Date: 2020-06-12 09:26  //时间
  */
 
-@Service
+
 @Slf4j
 public class UserDetailsServiceImpl implements UserDetailsService {
-
-    private final PasswordEncoder passwordEncoder;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     public Map<String, DbTempUser> user = new HashMap<>();
 
-    public UserDetailsServiceImpl(PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
 
     @PostConstruct
     public void init() {
@@ -70,8 +69,11 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 }
                 listString += str;
             }
-            JSONObject jsonObject = JSONUtil.parseObj(listString);
-            loginType = jsonObject.getStr("loginType");
+            if (StringUtils.hasText(listString)) {
+                JSONObject jsonObject = JSONUtil.parseObj(listString);
+                loginType = jsonObject.getStr("loginType");
+            }
+
         }
 
         System.out.println(loginType);
@@ -81,6 +83,12 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         } else {
             dbTempUserHResult = HResult.failed("账户密码不匹配");
         }
+        String grant_type = request.getParameter("grant_type");
+        String refresh_token = request.getParameter("refresh_token");
+        if (StringUtils.hasText(grant_type) && grant_type.equals("refresh_token") && StringUtils.hasText(refresh_token)) {
+            return getUserDetails(dbTempUserHResult.getData());
+        }
+        //if(StringUtils.hasText("refresh_token"))
         checkUser(dbTempUserHResult, username);
         return getUserDetails(dbTempUserHResult.getData());
     }

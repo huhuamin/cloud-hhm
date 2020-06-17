@@ -1,6 +1,8 @@
 package com.huhuamin.common.oauth2.jwt;
 
 
+import org.springframework.security.oauth2.common.DefaultExpiringOAuth2RefreshToken;
+import org.springframework.security.oauth2.common.DefaultOAuth2RefreshToken;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.OAuth2RefreshToken;
 import org.springframework.security.oauth2.provider.OAuth2Authentication;
@@ -59,14 +61,49 @@ public class JweTokenStore implements TokenStore {
         delegate.storeRefreshToken(refreshToken, authentication);
     }
 
+
+    private OAuth2RefreshToken createRefreshToken(OAuth2AccessToken encodedRefreshToken) {
+//        if (!delegate.isRefreshToken(encodedRefreshToken)) {
+//            throw new InvalidTokenException("Encoded token is not a refresh token");
+//        }
+        if (encodedRefreshToken.getExpiration()!=null) {
+            return new DefaultExpiringOAuth2RefreshToken(encodedRefreshToken.getValue(),
+                    encodedRefreshToken.getExpiration());
+        }
+        return new DefaultOAuth2RefreshToken(encodedRefreshToken.getValue());
+    }
+
     @Override
     public OAuth2RefreshToken readRefreshToken(String tokenValue) {
-        return delegate.readRefreshToken(tokenValue);
+        OAuth2AccessToken encodedRefreshToken=  converter.extractAccessToken(
+                tokenValue, crypto.decode(encodedSigningKey, tokenValue));
+        OAuth2RefreshToken refreshToken = createRefreshToken(encodedRefreshToken);
+//        if (approvalStore != null) {
+//            OAuth2Authentication authentication = readAuthentication(tokenValue);
+//            if (authentication.getUserAuthentication() != null) {
+//                String userId = authentication.getUserAuthentication().getName();
+//                String clientId = authentication.getOAuth2Request().getClientId();
+//                Collection<Approval> approvals = approvalStore.getApprovals(userId, clientId);
+//                Collection<String> approvedScopes = new HashSet<String>();
+//                for (Approval approval : approvals) {
+//                    if (approval.isApproved()) {
+//                        approvedScopes.add(approval.getScope());
+//                    }
+//                }
+//                if (!approvedScopes.containsAll(authentication.getOAuth2Request().getScope())) {
+//                    return null;
+//                }
+//            }
+//        }
+        return refreshToken;
+        //return delegate.readRefreshToken(tokenValue);
     }
 
     @Override
     public OAuth2Authentication readAuthenticationForRefreshToken(OAuth2RefreshToken token) {
-        return delegate.readAuthenticationForRefreshToken(token);
+
+        return converter.extractAuthentication(crypto.decode(encodedSigningKey,token.getValue()));
+
     }
 
     @Override

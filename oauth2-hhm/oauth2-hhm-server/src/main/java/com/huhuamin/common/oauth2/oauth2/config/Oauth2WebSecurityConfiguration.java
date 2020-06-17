@@ -1,11 +1,15 @@
 package com.huhuamin.common.oauth2.oauth2.config;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
@@ -21,6 +25,19 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @Configuration
 @EnableWebSecurity
 class Oauth2WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
+    @Autowired
+    private UserDetailsService userDetailsService;
+    @Autowired
+    public void setApplicationContext(ApplicationContext context) {
+        super.setApplicationContext(context);
+        AuthenticationManagerBuilder globalAuthBuilder = context
+                .getBean(AuthenticationManagerBuilder.class);
+        try {
+            globalAuthBuilder.userDetailsService(userDetailsService);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 //    @Override
 //    public void configure(WebSecurity web) throws Exception {
@@ -40,15 +57,15 @@ class Oauth2WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
      *
      * @return
      */
-//    @Override
-//    protected UserDetailsService userDetailsService() {
-//        return userDetailsService;
-//    }
-//
-//    @Override
-//    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-//        auth.userDetailsService(userDetailsService);
-//    }
+    @Override
+    protected UserDetailsService userDetailsService() {
+        return userDetailsService;
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
 
     //采用bcrypt对密码进行编码 client
     @Bean

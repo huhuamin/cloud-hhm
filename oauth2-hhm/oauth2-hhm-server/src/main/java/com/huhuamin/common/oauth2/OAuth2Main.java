@@ -1,6 +1,7 @@
 package com.huhuamin.common.oauth2;
 
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
+import com.huhuamin.common.oauth2.service.UserDetailsServiceImpl;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -19,9 +20,15 @@ public class OAuth2Main {
     public static void main(String[] args) {
         SpringApplication.run(OAuth2Main.class, args);
     }
+
     @Bean
     public SecurityAuthProperties securityAuthProperties() {
         return new SecurityAuthProperties();
+    }
+
+    @Bean
+    public UserDetailsServiceImpl userDetailsService() {
+        return new UserDetailsServiceImpl();
     }
 
 
