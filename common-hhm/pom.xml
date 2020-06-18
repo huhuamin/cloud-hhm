@@ -18,6 +18,7 @@
         <module>common-core-hhm</module>
         <module>common-oauth2-resource-server</module>
         <module>common-db-hhm</module>
+        <module>common-redis-hhm</module>
     </modules>
 
 
