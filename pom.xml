@@ -193,6 +193,11 @@
                 <artifactId>common-oauth2-resource-server</artifactId>
                 <version>${project.hhm.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>annotations</artifactId>
+                <version>3.0.1</version>
+            </dependency>
             <!--        内部 end-->
 
 

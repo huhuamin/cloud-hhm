@@ -12,6 +12,7 @@ import lombok.EqualsAndHashCode;
 
 @Data
 @EqualsAndHashCode(callSuper = false)
+@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("EI_EXPOSE_REP")
 public class HCommonException extends RuntimeException {
     private static final long serialVersionUID = 1L;
     /**
@@ -27,6 +28,7 @@ public class HCommonException extends RuntimeException {
     /**
      * 错误码对应的参数
      */
+
     private Object[] args;
 
     /**

@@ -30,12 +30,10 @@ public class DbAspect {
             if (method.getName().contains("save") || method.getName().contains("update")) {
                 DefaultRoutingDataSource.setDataSource(DbConstants.CLOUD_HHM_MASTER);
             } else {
-                if (dataSource == null) {
-                    DefaultRoutingDataSource.setDataSource(DbConstants.CLOUD_HHM_REPLIC);
-                } else {
-                    DefaultRoutingDataSource.setDataSource(dataSource.value());
-                }
+                DefaultRoutingDataSource.setDataSource(dataSource.value());
             }
+        }else{
+            DefaultRoutingDataSource.setDataSource(DbConstants.CLOUD_HHM_REPLIC);
         }
         /**
          *  如果没有注解{@link cn.com.uflyvision.metadata.config.DynamicDruidConfiguration#dataSource} 配置了默认的数据源

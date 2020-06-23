@@ -8,6 +8,7 @@ import com.huhuamin.common.oauth2.model.UserJwt;
 import com.nimbusds.jose.*;
 import com.nimbusds.jose.crypto.AESDecrypter;
 import com.nimbusds.jose.crypto.AESEncrypter;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
@@ -59,7 +60,7 @@ public class JweAccessTokenConverter implements TokenEnhancer, AccessTokenConver
 
     private AccessTokenConverter tokenConverter = new DefaultAccessTokenConverter();
 
-    private JwtClaimsSetVerifier jwtClaimsSetVerifier = new JweAccessTokenConverter.NoOpJwtClaimsSetVerifier();
+//    private JwtClaimsSetVerifier jwtClaimsSetVerifier = new JweAccessTokenConverter.NoOpJwtClaimsSetVerifier();
 
     private JsonParser objectMapper = JsonParserFactory.create();
 
@@ -67,6 +68,7 @@ public class JweAccessTokenConverter implements TokenEnhancer, AccessTokenConver
 
     private Signer signer = new MacSigner(verifierKey);
 
+    @SuppressFBWarnings("URF_UNREAD_FIELD")
     private String signingKey = verifierKey;
 
     private SignatureVerifier verifier;
@@ -97,17 +99,17 @@ public class JweAccessTokenConverter implements TokenEnhancer, AccessTokenConver
     /**
      * @return the {@link JwtClaimsSetVerifier} used to verify the claim(s) in the JWT Claims Set
      */
-    public JwtClaimsSetVerifier getJwtClaimsSetVerifier() {
-        return this.jwtClaimsSetVerifier;
-    }
+//    public JwtClaimsSetVerifier getJwtClaimsSetVerifier() {
+//        return this.jwtClaimsSetVerifier;
+//    }
 
     /**
      * @param jwtClaimsSetVerifier the {@link JwtClaimsSetVerifier} used to verify the claim(s) in the JWT Claims Set
      */
-    public void setJwtClaimsSetVerifier(JwtClaimsSetVerifier jwtClaimsSetVerifier) {
-        Assert.notNull(jwtClaimsSetVerifier, "jwtClaimsSetVerifier cannot be null");
-        this.jwtClaimsSetVerifier = jwtClaimsSetVerifier;
-    }
+//    public void setJwtClaimsSetVerifier(JwtClaimsSetVerifier jwtClaimsSetVerifier) {
+//        Assert.notNull(jwtClaimsSetVerifier, "jwtClaimsSetVerifier cannot be null");
+//        this.jwtClaimsSetVerifier = jwtClaimsSetVerifier;
+//    }
 
     @Override
     public Map<String, ?> convertAccessToken(OAuth2AccessToken token, OAuth2Authentication authentication) {
@@ -154,6 +156,7 @@ public class JweAccessTokenConverter implements TokenEnhancer, AccessTokenConver
         return result;
     }
 
+    @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public void setKeyPair(KeyPair keyPair) {
         PrivateKey privateKey = keyPair.getPrivate();
         Assert.state(privateKey instanceof RSAPrivateKey, "KeyPair must be an RSA ");
@@ -297,6 +300,8 @@ public class JweAccessTokenConverter implements TokenEnhancer, AccessTokenConver
         }
     }
 
+
+    @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     public void afterPropertiesSet() throws Exception {
         if (verifier != null) {
             // Assume signer also set independently if needed
@@ -320,15 +325,16 @@ public class JweAccessTokenConverter implements TokenEnhancer, AccessTokenConver
         } else if (verifier instanceof MacSigner) {
             // Avoid a race condition where setters are called in the wrong order. Use of
             // == is intentional.
-            Assert.state(this.signingKey == this.verifierKey,
-                    "For MAC signing you do not need to specify the verifier key separately, and if you do it must match the signing key");
+//            Assert.state(this.signingKey.equals(this.verifierKey),
+//                    "For MAC signing you do not need to specify the verifier key separately, and if you do it must match the signing key");
         }
         this.verifier = verifier;
     }
 
-    private class NoOpJwtClaimsSetVerifier implements JwtClaimsSetVerifier {
-        @Override
-        public void verify(Map<String, Object> claims) throws InvalidTokenException {
-        }
-    }
+
+//    private class NoOpJwtClaimsSetVerifier implements JwtClaimsSetVerifier {
+//        @Override
+//        public void verify(Map<String, Object> claims) throws InvalidTokenException {
+//        }
+//    }
 }

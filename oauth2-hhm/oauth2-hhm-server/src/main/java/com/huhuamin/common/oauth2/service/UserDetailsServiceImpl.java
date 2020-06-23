@@ -7,6 +7,7 @@ import com.huhuamin.common.oauth2.common.core.exception.LoginException;
 import com.huhuamin.common.oauth2.common.core.model.HResult;
 import com.huhuamin.common.oauth2.model.DbTempUser;
 import com.huhuamin.common.oauth2.model.UserJwt;
+import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
@@ -48,13 +49,14 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     }
 
 
+    @SuppressFBWarnings("DM_DEFAULT_ENCODING")
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         HttpServletRequest request = ((ServletRequestAttributes) (RequestContextHolder.currentRequestAttributes())).getRequest();
         String loginType = request.getParameter("loginType");
         if (StringUtils.isEmpty(loginType)) {
             String str = "";
-            String listString = "";
+            StringBuffer listString = new StringBuffer();
             BufferedReader br = null;
             while (true) {
                 try {
@@ -63,9 +65,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-                listString += str;
+                listString.append(str);
             }
-            if (StringUtils.hasText(listString)) {
+            if (StringUtils.hasText(listString.toString())) {
                 JSONObject jsonObject = JSONUtil.parseObj(listString);
                 loginType = jsonObject.getStr("loginType");
             }
