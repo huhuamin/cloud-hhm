@@ -1,0 +1,15 @@
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/nginx:1.16
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/sentry-onpremise-local:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/sentry-cleanup-onpremise-local:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/snuba-cleanup-onpremise-local:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/getsentry/relay:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/symbolicator-cleanup-onpremise-local:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/getsentry/snuba:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/getsentry/symbolicator:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/memcached:1.5-alpine
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/postgres:9.6
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/tianon/exim4:latest
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/confluentinc/cp-kafka:5.5.0
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/redis:5.0-alpine
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/confluentinc/cp-zookeeper:5.5.0
+docker pull registry.cn-hangzhou.aliyuncs.com/uflyvision/yandex/clickhouse-server:19.17

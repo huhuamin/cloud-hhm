@@ -21,9 +21,9 @@ services:
       KAFKA_NUM_PARTITIONS: 3
       KAFKA_DELETE_RETENTION_MS: 1000
       KAFKA_CREATE_TOPICS: "invite_buy:2:1,invite_buy_error:2:1"
-#  kafka-manager:
-#    image: sheepkiller/kafka-manager                ## 镜像：开源的web管理kafka集群的界面
-#    environment:
-#        ZK_HOSTS: 10.252.209.179                   ## 修改:宿主机IP
-#    ports:
-#      - "9001:9000"                                 ## 暴露端口
+  kafka-manager:
+    image: sheepkiller/kafka-manager                ## 镜像：开源的web管理kafka集群的界面
+    environment:
+        ZK_HOSTS: 10.252.209.179                   ## 修改:宿主机IP
+    ports:
+      - "19000:9000"                                 ## 暴露端口

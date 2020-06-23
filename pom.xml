@@ -33,6 +33,7 @@
         <spring.security.version>2.3.8.RELEASE</spring.security.version>
         <spring.security.jwt>1.1.1.RELEASE</spring.security.jwt>
         <kaptcha.version>2.3.2</kaptcha.version>
+        <sentry.version>1.7.30</sentry.version>
     </properties>
     <!--    自己的项目-->
     <modules>
@@ -165,6 +166,11 @@
                 <artifactId>kaptcha</artifactId>
                 <version>${kaptcha.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.sentry</groupId>
+                <artifactId>sentry-logback</artifactId>
+                <version>${sentry.version}</version>
+            </dependency>
 
             <!--        内部 start -->
             <dependency>
@@ -188,6 +194,8 @@
                 <version>${project.hhm.version}</version>
             </dependency>
             <!--        内部 end-->
+
+
         </dependencies>
 
 
