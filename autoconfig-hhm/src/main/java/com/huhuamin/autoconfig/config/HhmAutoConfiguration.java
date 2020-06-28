@@ -1,6 +1,5 @@
 package com.huhuamin.autoconfig.config;
 
-import com.huhuamin.autoconfig.config.bean.User;
 import com.huhuamin.autoconfig.config.bean.UserFactories;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
