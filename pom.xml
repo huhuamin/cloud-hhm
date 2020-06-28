@@ -40,6 +40,7 @@
         <module>oauth2-hhm</module>
         <module>common-hhm</module>
         <module>gateway-hhm</module>
+        <module>autoconfig-hhm</module>
     </modules>
 
 
@@ -171,6 +172,11 @@
                 <artifactId>sentry-logback</artifactId>
                 <version>${sentry.version}</version>
             </dependency>
+            <dependency>
+                <groupId>com.google.code.findbugs</groupId>
+                <artifactId>annotations</artifactId>
+                <version>3.0.1</version>
+            </dependency>
 
             <!--        内部 start -->
             <dependency>
@@ -190,14 +196,20 @@
             </dependency>
             <dependency>
                 <groupId>com.clzah</groupId>
+                <artifactId>common-redis-hhm</artifactId>
+                <version>${project.hhm.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.clzah</groupId>
                 <artifactId>common-oauth2-resource-server</artifactId>
                 <version>${project.hhm.version}</version>
             </dependency>
             <dependency>
-                <groupId>com.google.code.findbugs</groupId>
-                <artifactId>annotations</artifactId>
-                <version>3.0.1</version>
+                <groupId>com.huhuamin</groupId>
+                <artifactId>autoconfig-hhm</artifactId>
+                <version>${project.hhm.version}</version>
             </dependency>
+
             <!--        内部 end-->
 
 

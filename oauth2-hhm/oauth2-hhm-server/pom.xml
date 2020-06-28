@@ -111,6 +111,10 @@
             <groupId>com.clzah</groupId>
             <artifactId>common-oauth2-hhm</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.clzah</groupId>
+            <artifactId>common-redis-hhm</artifactId>
+        </dependency>
     </dependencies>
 
 

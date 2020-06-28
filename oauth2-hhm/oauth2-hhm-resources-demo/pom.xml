@@ -37,6 +37,11 @@
             <groupId>com.clzah</groupId>
             <artifactId>common-oauth2-resource-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.huhuamin</groupId>
+            <artifactId>autoconfig-hhm</artifactId>
+        </dependency>
+
     </dependencies>
 
 
