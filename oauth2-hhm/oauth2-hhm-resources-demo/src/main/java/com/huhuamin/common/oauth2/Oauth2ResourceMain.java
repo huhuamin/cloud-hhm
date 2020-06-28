@@ -3,6 +3,7 @@ package com.huhuamin.common.oauth2;
 
 import com.huhuamin.autoconfig.config.annotation.EnableHhmConfiguration;
 import com.huhuamin.autoconfig.config.bean.User;
+import com.huhuamin.autoconfig.config.bean.UserFactories;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -20,6 +21,7 @@ public class Oauth2ResourceMain {
     public static void main(String[] args) {
         ConfigurableApplicationContext ca=SpringApplication.run(Oauth2ResourceMain.class, args);
         System.out.println(ca.getBean(User.class));
+        System.out.println(ca.getBean(UserFactories.class));
     }
 
 
