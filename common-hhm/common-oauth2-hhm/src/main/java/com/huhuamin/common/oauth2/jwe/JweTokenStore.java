@@ -1,4 +1,4 @@
-package com.huhuamin.common.oauth2.jwt;
+package com.huhuamin.common.oauth2.jwe;
 
 
 import org.springframework.security.core.Authentication;

@@ -1,8 +1,8 @@
 package com.huhuamin.common.oauth2.oauth2.config;
 
 import com.huhuamin.common.oauth2.handler.BootOAuth2WebResponseExceptionTranslator;
-import com.huhuamin.common.oauth2.jwt.JweAccessTokenConverter;
-import com.huhuamin.common.oauth2.jwt.JweTokenStore;
+import com.huhuamin.common.oauth2.jwe.JweAccessTokenConverter;
+import com.huhuamin.common.oauth2.jwe.JweTokenStore;
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

@@ -2,8 +2,8 @@ package com.huhuamin.common.oauth2;
 
 
 import com.huhuamin.common.oauth2.convert.ResourceConvertUser;
-import com.huhuamin.common.oauth2.jwt.JweAccessTokenConverter;
-import com.huhuamin.common.oauth2.jwt.JweTokenStore;
+import com.huhuamin.common.oauth2.jwe.JweAccessTokenConverter;
+import com.huhuamin.common.oauth2.jwe.JweTokenStore;
 import com.huhuamin.common.oauth2.properties.SecurityAuthProperties;
 import com.huhuamin.common.oauth2.service.UserTokenServices;
 import org.springframework.context.annotation.Bean;

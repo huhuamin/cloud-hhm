@@ -1,7 +1,7 @@
 package com.huhuamin.common.oauth2.service;
 
 import com.huhuamin.common.oauth2.convert.ResourceConvertUser;
-import com.huhuamin.common.oauth2.jwt.JweAccessTokenConverter;
+import com.huhuamin.common.oauth2.jwe.JweAccessTokenConverter;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.oauth2.common.OAuth2AccessToken;
 import org.springframework.security.oauth2.common.exceptions.InvalidTokenException;
