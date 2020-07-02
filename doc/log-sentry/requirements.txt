@@ -1,0 +1,2 @@
+# Add plugins here
+django-smtp-ssl~=1.0
