@@ -26,6 +26,7 @@
         <spring.cloud.version>Hoxton.SR3</spring.cloud.version>
         <spring.cloud.alibaba>2.2.0.RELEASE</spring.cloud.alibaba>
         <openfeign.version>2.2.2.RELEASE</openfeign.version>
+        <feign-okhttp.version>11.0</feign-okhttp.version>
         <fastjson.version>1.2.70</fastjson.version>
         <aspectjweaver.vesion>1.9.5</aspectjweaver.vesion>
         <hutool.version>5.3.7</hutool.version>
@@ -41,6 +42,8 @@
         <module>common-hhm</module>
         <module>gateway-hhm</module>
         <module>autoconfig-hhm</module>
+        <module>cloud-modules</module>
+        <module>cloud-api</module>
     </modules>
 
 
@@ -76,9 +79,15 @@
             <!--            openfeign-->
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
-                <artifactId>spring-cloud-starter-openfeign</artifactId>
+                <artifactId>feign</artifactId>
                 <version>${openfeign.version}</version>
             </dependency>
+            <dependency>
+                <groupId>io.github.openfeign</groupId>
+                <artifactId>feign-okhttp</artifactId>
+                <version>${feign-okhttp.version}</version>
+            </dependency>
+
             <!--            spring 全家桶 start -->
 
             <!--          DB 相关 start -->

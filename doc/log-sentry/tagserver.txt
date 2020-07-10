@@ -13,3 +13,5 @@ docker tag  registry.cn-hangzhou.aliyuncs.com/uflyvision/confluentinc/cp-kafka:5
 docker tag  registry.cn-hangzhou.aliyuncs.com/uflyvision/redis:5.0-alpine redis:5.0-alpine
 docker tag   registry.cn-hangzhou.aliyuncs.com/uflyvision/confluentinc/cp-zookeeper:5.5.0 confluentinc/cp-zookeeper:5.5.0
 docker tag  registry.cn-hangzhou.aliyuncs.com/uflyvision/yandex/clickhouse-server:19.17  yandex/clickhouse-server:19.17
+
+docker --version

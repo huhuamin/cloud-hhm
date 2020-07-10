@@ -24,6 +24,7 @@ public class GatewayMain {
     }
 
     @Bean
+    @RefreshScope
     public SecurityAuthProperties securityAuthProperties() {
         return new SecurityAuthProperties();
     }

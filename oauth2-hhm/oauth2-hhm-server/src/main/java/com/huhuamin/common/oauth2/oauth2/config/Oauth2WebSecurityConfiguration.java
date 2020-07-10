@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,7 +43,7 @@ class Oauth2WebSecurityConfiguration extends WebSecurityConfigurerAdapter {
 //    @Override
 //    public void configure(WebSecurity web) throws Exception {
 //        //用户登录认证、用户退出、用户获取jwt令牌
-//        web.ignoring().antMatchers("/token","check_token", "/logout");
+//        web.ignoring().antMatchers("/oauth/token","check_token", "/logout");
 //    }
 
     @Bean
