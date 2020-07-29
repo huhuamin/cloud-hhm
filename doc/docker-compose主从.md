@@ -7,8 +7,13 @@
 docker官网安装教程：https://docs.docker.com/engine/install/
 
 docker-compose 官网安装教程: https://docs.docker.com/compose/install/
-curl -L https://get.daocloud.io/docker/compose/releases/download/1.26.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
 
+```sh
+curl -L https://get.daocloud.io/docker/compose/releases/download/1.26.2/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+sudo chmod +x /usr/local/bin/docker-compose
+sudo ln -s /usr/local/bin/docker-compose /usr/bin/docker-compose
+docker-compose --version
+```
 
 ### 2.创建yml目录，相关数据挂载
 
