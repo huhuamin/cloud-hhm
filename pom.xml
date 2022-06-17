@@ -27,7 +27,7 @@
         <spring.cloud.alibaba>2.2.0.RELEASE</spring.cloud.alibaba>
         <openfeign.version>2.2.2.RELEASE</openfeign.version>
         <feign-okhttp.version>11.0</feign-okhttp.version>
-        <fastjson.version>1.2.70</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <aspectjweaver.vesion>1.9.5</aspectjweaver.vesion>
         <hutool.version>5.3.7</hutool.version>
         <pagehelper.version>1.2.13</pagehelper.version>
